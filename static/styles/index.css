@@ -15,3 +15,8 @@ header {
     box-shadow: 4px 4px 4px 4px #CDC392;
     text-align: center;
 }
+
+.user {
+    display: flex;
+    flex-direction: row;
+  }
