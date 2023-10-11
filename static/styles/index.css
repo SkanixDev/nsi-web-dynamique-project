@@ -4,19 +4,46 @@ body{
 }
 
 h1 {
-    color: #0C0F15;
+    color: #9EB7E5;
     margin: 0;
+    font-family: Arial;
 }
 
 header {
-    padding-top: 20px;
+    padding-top: 20px; 
     padding-bottom: 20px;
     background-color: white;
-    box-shadow: 4px 4px 4px 4px #CDC392;
-    text-align: center;
+    box-shadow: 0px 4px 15px #879ace;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+      
 }
 
 .user {
-    display: flex;
-    flex-direction: row;
+
   }
+
+.logo {
+
+  }
+
+.card {
+    margin: 20px;
+    box-shadow: 0px 5px 20px rgba(125, 124, 124, 0.492);
+    width: fit-content;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    font-family: Helvetica, sans-serif;
+}
+
+.card .price_card{
+    font-size: 20px;
+}
+
+.card .name_shoes{
+    font-size: 15px
+}
