@@ -1,0 +1,40 @@
+:root {
+  --blue: #9eb7e5;
+  --white: #ffffff;
+  --gold: #cdc392;
+  --blue2: #6074a1;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
+}
+
+h1 {
+  color: var(--blue);
+  margin: 0;
+  text-align: center;
+  padding-top: 15px;
+}
+
+input {
+  color: black;
+}
+
+label {
+}
+
+.all {
+  border: 3px solid var(--blue);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  max-height: 500px;
+  margin-inline: auto;
+}
+
+.submit {
+  margin-inline: auto;
+}
