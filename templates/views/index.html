@@ -17,21 +17,24 @@
         <h1>iStock</h1>
 
         <div class="user">
-            <img src="/static/img/user.svg"
-            width="40"
-            height="40">
-            <p> Connection </p>
-          </div>
+            <img src="/static/img/user.svg" width="20" height="20">
+            <a href="/register" class="button-link">
+            <strong>Connection</strong>
+            </a>
+          </div>          
 
         </header>
     </header>
     <main>
+        {%for shoe in shoes%} 
         <div class="card">
-            <img src="https://cdn.lesitedelasneaker.com/wp-content/images/2023/01/born-x-raised-nike-sb-dunk-low-2.jpg" style="width:200px;height:200px;">
-            <p class="name_shoes">Dunk Low : Born x raised</p>
+            <img src="https://images.stockx.com/images/Nike-SB-Dunk-Low-Born-x-Raised-One-Block-At-A-Time-Product.jpg?fit=fill&bg=FFFFFF&w=140&h=75&fm=avif&auto=compress&dpr=1&trim=color&updated_at=1688131857&q=57" style="width:190px;height:110px;">
+            <p class="name_shoes">{{shoe["name"]}}</p>
             <p class="price_card">666€<p>
-            <img src="https://sneakernews.com/wp-content/uploads/2020/09/dark-mocha-air-jordan-1-555088-105-7.jpg">
         </div>
-    </main>
+        {% endfor %}
+    </main> 
+    <footer>
+        <p>Remerciements à Baptiste Champion (il est beau), Nicholas Saintvil (il est tres beau) et François-Marie Lescure (il est giga beau).</p>
+    </footer>
 </body>
-</html>

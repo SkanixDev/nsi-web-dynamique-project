@@ -1,49 +1,87 @@
-body{
-    margin: 0;
-    padding: 0;
+:root {
+  --blue: #9eb7e5;
+  --white: #ffffff;
+  --gold: #cdc392;
+  --blue2: #6074a1;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
 }
 
 h1 {
-    color: #9EB7E5;
-    margin: 0;
-    font-family: Arial;
+  color: var(--blue);
+  margin: 0;
+  padding-top: 15px;
 }
 
 header {
-    padding-top: 20px; 
-    padding-bottom: 20px;
-    background-color: white;
-    box-shadow: 0px 4px 15px #879ace;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-      
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: var(--white);
+  box-shadow: 0px 4px 15px #879ace;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.button-link {
+  text-decoration: none;
+  color: var(--blue);
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.logo {
+  padding-top: 15px;
 }
 
 .user {
+  border: 2px solid #9eb7e5;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
 
-  }
+.button-link img {
+  vertical-align: middle;
+  margin-right: 10px;
+}
 
-.logo {
-
-  }
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .card {
-    margin: 20px;
-    box-shadow: 0px 5px 20px rgba(125, 124, 124, 0.492);
-    width: fit-content;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 20px;
-    font-family: Helvetica, sans-serif;
+  margin: 20px;
+  box-shadow: 0px 5px 20px rgba(125, 124, 124, 0.492);
+  width: fit-content;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 20px;
+  font-family: Helvetica, sans-serif;
 }
 
-.card .price_card{
-    font-size: 20px;
+.card .price_card {
+  font-size: 20px;
 }
 
-.card .name_shoes{
-    font-size: 15px
+.card .name_shoes {
+  font-size: 15px;
+}
+
+footer {
+  text-align: center;
+  padding: 5px;
+  background-color: beige;
+}
+
+.lineaire-simple {
+  background: linear-gradient(blue, pink);
 }
