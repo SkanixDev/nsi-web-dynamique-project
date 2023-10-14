@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Flask, render_template, request, redirect
 import sqlite3 as sql
 from flask_bcrypt import Bcrypt
@@ -23,14 +24,14 @@ def index():
     return render_template('./views/index.html', shoes=cursor.fetchall())
 
 # Page: FM
-# Description: Page de test pour FM (à supprimer)
+# Description: Page de test pour FM (a supprimer)
 @app.route('/fm')
 def fm():
 
     con = sql.connect(database)
     cursor = con.cursor()
     requete = """
-    
+
     """
     cursor.execute(requete)
     con.commit()
@@ -41,10 +42,40 @@ def fm():
 # Description: Page de connexion d'utilisateur
 @app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template('./views/login.html')
+    result = request.form
+    message = ""
+    # A FAIRE: Ajouter les cookies
+    if request.method == 'POST':
+        if (result["email"] != "" or result["password"] != ""):
+            print("[LOG] - Connexion d'un utilisateur")
+            con = sql.connect(database)
+            cursor = con.cursor()
+            requete = """SELECT * FROM users WHERE email=?;"""
+            cursor.execute(requete, (result["email"],))
+            con.commit()
+            user = cursor.fetchall()
+            print(user)
+            if user:
+                if bcrypt.check_password_hash(user[0][7], result["password"]):
+                    print("[LOG] - Connexion réussie")
+                    return redirect('/?info=login_success')
+                else:
+                    print("[LOG] - Mot de passe incorrect")
+                    message = "Mot de passe incorrect"
+                    return render_template('./views/login.html', message=message)
+            else:
+                print("[LOG] - Utilisateur introuvable")
+                message = "Utilisateur introuvable"
+                return render_template('./views/login.html', message=message)
+        else:
+            print("[LOG] - Erreur de connexion")
+            message = "Erreur de connexion"
+            return render_template('./views/login.html', message=message)
+    else:
+        return render_template('./views/login.html')
 
 # Page: Register
-# Description: Permet de se créer un compte
+# Description: Permet de se creer un compte
 @app.route('/register', methods=['GET','POST'])
 def register():
     result = request.form
@@ -76,7 +107,7 @@ def register():
             result["email"], 
             hashed_password))
             con.commit()
-            return redirect('/')
+            return redirect('/?info=register_success')
         else:
             message = "Une erreur c'est produite."
             return render_template('./views/register.html')

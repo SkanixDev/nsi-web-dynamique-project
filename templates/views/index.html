@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     
 <head>
     <meta charset="UTF-8">
@@ -17,9 +17,9 @@
         <h1>iStock</h1>
 
         <div class="user">
-            <img src="/static/img/user.svg" width="20" height="20">
+            <img src="/static/img/user.svg" width="16" height="16">
             <a href="/register" class="button-link">
-            <strong>Connection</strong>
+            Connexion
             </a>
           </div>          
 
@@ -28,9 +28,9 @@
     <main>
         {%for shoe in shoes%} 
         <div class="card">
-            <img src="https://images.stockx.com/images/Nike-SB-Dunk-Low-Born-x-Raised-One-Block-At-A-Time-Product.jpg?fit=fill&bg=FFFFFF&w=140&h=75&fm=avif&auto=compress&dpr=1&trim=color&updated_at=1688131857&q=57" style="width:190px;height:110px;">
-            <p class="name_shoes">{{shoe["name"]}}</p>
-            <p class="price_card">666€<p>
+            <img src="{{shoe[4]}}" style="width:190px;height:110px;">
+            <p class="name_shoes">{{shoe[1]}}</p>
+            <p class="price_card">{{shoe[3]}}€<p>
         </div>
         {% endfor %}
     </main> 
