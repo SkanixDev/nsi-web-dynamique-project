@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
-    
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/styles/index.css">
-    <title>iStock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/product.css">
+    <title>Document</title>
 </head>
 <body>
     <header>
@@ -28,16 +28,14 @@
         {% endif %}
 
     </header>
-    <main>
-        {%for shoe in shoes%} 
-        <div class="card">
-            <img src="{{shoe[4]}}" style="width:190px;">
-            <p class="name_shoes">{{shoe[1]}}</p>
-            <p class="price_card">{{shoe[3]}}€<p>
+    <div>
+    <img src="https://images.stockx.com/images/adidas-Campus-00s-Grey-White-Product.jpg" width="500px">
+    <div class="desccription-product">
+        <h2>Adidas Campus 00s</h2>
+        <div class="other-description">
+            <p>101.0€</p>
         </div>
-        {% endfor %}
-    </main> 
-    <footer>
-        <p>Remerciements à Baptiste Champion (il est beau), Nicholas Saintvil (il est beau) et François-Marie Lescure (il est  beau).</p>
-    </footer>
+    </div>
+    </div>
 </body>
+</html>

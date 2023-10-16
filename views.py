@@ -1,14 +1,23 @@
 # coding=utf-8
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import sqlite3 as sql
 from flask_bcrypt import Bcrypt
+from flask_session import Session
 
 # Initialisations
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 bcrypt = Bcrypt(app)
 
 # Variables
 database = "database/nsi.db"
+
+# Fonction utile
+def add_connect_cookies(user):
+    session['logged_in'] = True
+    session['user'] = user
 
 # Page: Main
 # Description: Page d'accueil/principale du site web
@@ -21,7 +30,7 @@ def index():
     cursor.execute(requete_all_shoes)
     con.commit()
 
-    return render_template('./views/index.html', shoes=cursor.fetchall())
+    return render_template('./views/index.html', shoes=cursor.fetchall(), logged_in=session.get('logged_in'), user=session.get('user'))
 
 # Page: FM
 # Description: Page de test pour FM (a supprimer)
@@ -45,6 +54,10 @@ def login():
     result = request.form
     message = ""
     # A FAIRE: Ajouter les cookies
+    
+    if session.get('logged_in') is not None:
+        return redirect('/?info=already_logged_in')
+    
     if request.method == 'POST':
         if (result["email"] != "" or result["password"] != ""):
             print("[LOG] - Connexion d'un utilisateur")
@@ -57,6 +70,8 @@ def login():
             print(user)
             if user:
                 if bcrypt.check_password_hash(user[0][7], result["password"]):
+                    user_for_cookie = (user[0][1], user[0][2], user[0][3], user[0][5], user[0][6])
+                    add_connect_cookies(user_for_cookie)
                     print("[LOG] - Connexion réussie")
                     return redirect('/?info=login_success')
                 else:
@@ -107,6 +122,8 @@ def register():
             result["email"], 
             hashed_password))
             con.commit()
+            user_for_cookie = (result["name"], result["lastname"], result["gender"], result["size"], result["email"])
+            add_connect_cookies(user_for_cookie)
             return redirect('/?info=register_success')
         else:
             message = "Une erreur c'est produite."
@@ -114,7 +131,26 @@ def register():
     else:
         return render_template('./views/register.html')
 
+# Page: product
+# Description: Page de produit, page dynamique
+@app.route('/product/<id>')
+def product(id):
+    con = sql.connect(database)
+    cursor = con.cursor()
+    requete = """SELECT * FROM Shoes WHERE id=?;"""
+    cursor.execute(requete, (id,))
+    con.commit()
+    return render_template('./views/product.html', shoes=cursor.fetchall())
 
+# Page: account
+# Description: Page de compte utilisateur
+@app.route('/account')
+def account():
+    if session.get('logged_in') is None:
+        return redirect('/?info=not_logged_in')
+    else:
+        return render_template('./views/account.html', user=session.get('user'), logged_in=session.get('logged_in'))
+    
 # Lancement du site
 app.run(debug=True)
 
