@@ -60,14 +60,84 @@ header {
 
 /* Fin design header*/
 
+.product{
+  display: flex
+}
+
 
 .desccription-product{
     display: inline-block;
     vertical-align: top;
-    font-size: 40px
+    font-size: 35px;
+    margin-top: 30px 
 }
 
 .other-description{
     vertical-align: top;
-    font-size: 30px
+    font-size: 20px;
+  
+}
+
+.img_product{
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top:50px;
+  box-shadow:0px 5px 20px var(--shadow);
+  border-radius: 20px;
+}
+
+.prix{
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.taille{
+  border: solid 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 20px
+}
+
+.acheter{
+  font-size: 30px
+}
+
+.acheter_button{
+  border: solid;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 30px;
+  float: right;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 50px;
+  background-color: #6074A1;
+  color: white
+}
+
+.panier_button{
+  border: solid;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 30px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 50px;
+  background-color: #9EB7E5;
+  color: white
+}
+  
+.acheter_button:hover {
+    background-color: #9EB7E5
+}
+
+.panier_button:hover {
+  background-color: #6074A1;
 }

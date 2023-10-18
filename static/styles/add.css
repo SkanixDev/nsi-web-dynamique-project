@@ -1,0 +1,82 @@
+@font-face {
+    font-family: Archivo;
+    src: url('/static/fonts/Archivo.ttf');
+  }
+  
+  :root {
+    --blue: #9eb7e5;
+    --white: #ffffff;
+    --gold: #cdc392;
+    --white-gold: #E8E5DA;
+    --blue2: #6074a1;
+    --font: #040507;
+    --shadow: rgba(125, 124, 124, 0.25);
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Archivo;
+  }
+  
+  h1 {
+    color: var(--blue);
+    margin: 0;
+    text-align: center;
+    padding-top: 15px;
+  }
+  
+  input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+  
+  select {
+    padding-inline: 10px;
+  }
+  
+  .all {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 3px solid var(--blue);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    max-height: 500px;
+    margin-inline: auto;
+  }
+  
+  .return {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .return a{
+    background-color: var(--shadow);
+    text-align: center;
+    padding: 10px;
+    border: 3px solid var(--blue);
+    border-radius: 10px;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin-inline: auto;
+  }
+
+  
+  .submit {
+    text-align: center;
+    background-color: var(--shadow);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 3px solid var(--blue);
+    border-radius: 10px;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin-inline: auto;
+    cursor: pointer;
+  }

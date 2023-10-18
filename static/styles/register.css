@@ -37,8 +37,8 @@ select {
 }
 
 .all {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 15px;
   padding: 10px;
   border: 3px solid var(--blue);
   border-radius: 10px;
@@ -51,6 +51,7 @@ select {
 
 .login {
   text-align: center;
+  margin-top: 50px;
 }
 .login a{
   background-color: var(--shadow);
@@ -59,9 +60,26 @@ select {
   border: 3px solid var(--blue);
   border-radius: 10px;
   display: flex;
-  width: 500px;
-  height: 40px;
+  width: fit-content;
+  height: fit-content;
   margin-inline: auto;
+}
+
+.register {
+  text-align: center;
+  margin-top: 50px;
+}
+.register a{
+  background-color: var(--shadow);
+  text-align: center;
+  padding: 10px;
+  border: 3px solid var(--blue);
+  border-radius: 10px;
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin-inline: auto;
+  cursor: pointer;
 }
 
 .submit {
@@ -73,7 +91,8 @@ select {
   border: 3px solid var(--blue);
   border-radius: 10px;
   display: flex;
-  width: 525px;
-  height: 40px;
+  width: fit-content;
+  height: fit-content;
   margin-inline: auto;
+  cursor: pointer;
 }

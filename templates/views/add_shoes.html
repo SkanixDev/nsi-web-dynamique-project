@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/static/styles/add.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>add</title>
+  </head>
+  <body>
+    <h1>Add Shoes</h1>
+      <div class="all">
+        <label for="name">Nom:</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="nom de la chaussure"
+          required
+        />
+        <label for="size">Pointure:</label>
+        <input type="number" name="size" id="size" placeholder="43" required />
+
+        <label for="price">Prix:</label>
+        <input type="number" name="price" id="price" placeholder="100" required />
+
+        <label for="url">Image:</label>
+        <input type="url" name="url" id="url" placeholder="url" required />
+
+
+      </div>
+      <input class="submit" type="submit" value="Ajouter la chaussre" />
+    </form>
+    <div class="return">
+      <p>Voulez vous annuler ?</p>
+      <a href="/account">
+        Retour à la page de base
+      </a>
+    </div>
+  </body>
+</html>

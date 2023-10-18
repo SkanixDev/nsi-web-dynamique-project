@@ -40,6 +40,23 @@ header p {
     margin: 0;
     opacity: .7;
 }
+
+.form-logout{
+    position: absolute;
+    right: 40px;
+    top: 40px;
+}
+.form-logout input {
+    border: none;
+    background-color: transparent;
+    color: var(--blue2);
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+.form-logout input:hover{
+    color: var(--blue);
+}
 /* Fin design header*/
 
 /* Début design table user-information*/

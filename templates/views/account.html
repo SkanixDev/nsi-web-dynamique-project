@@ -10,6 +10,9 @@
     <header>
         <h1>Bonjour, <span> {{user[1]}} </span>!</h1>
         <p>Bienvenue dans votre compte.</p>
+        <form action="/logout" method="post" class="form-logout">
+            <input class="logout" type="submit" value="Se déconnecter">
+        </form>
     </header>
     <h2 class="title-user-information">Vos information:</h2>
     <table class="user-information">
@@ -40,5 +43,6 @@
             <td>{{user[4]}}</td>
         </tr>
     </table>
+    <h2 class="title-user-information">Vos commandes:</h2>
 </body>
 </html>

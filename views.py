@@ -40,7 +40,13 @@ def fm():
     con = sql.connect(database)
     cursor = con.cursor()
     requete = """
-
+SELECT 
+*
+FROM orders
+JOIN users
+  ON orders.idUser = users.id
+JOIN Shoes
+  ON orders.idShoes = Shoes.id;
     """
     cursor.execute(requete)
     con.commit()
@@ -149,8 +155,36 @@ def account():
     if session.get('logged_in') is None:
         return redirect('/?info=not_logged_in')
     else:
-        return render_template('./views/account.html', user=session.get('user'), logged_in=session.get('logged_in'))
-    
+        # Tu dois:
+        # 1. Récuperer l'id de l'utilisateur dans `user`
+        # 2. Récuperer les commandes de l'utilisateur
+        # 3. Faire une joiture entre les commandes et les chaussures pour recuperer les informations des chaussures
+
+        # Utilise JOIN pour faire la jointure entre les tables
+        con = sql.connect(database)
+        cursor = con.cursor()
+        requete = """SELECT () FROM orders LEFT JOIN users ON orders.idUser = users.id"""
+        
+
+        return render_template('./views/account.html', user=session.get('user'), 
+                               logged_in=session.get('logged_in'),
+                               orders=orders)
+
+# Page: add_shoes
+# Description: Page d'ajout de chaussures
+@app.route('/add_shoes', methods=['GET','POST'])
+def add_shoes():
+    return render_template('./views/add_shoes.html')
+
+# Page: logout
+# Description: Page de déconnexion
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect('/?info=logout_success')
+
+
+
 # Lancement du site
 app.run(debug=True)
 
