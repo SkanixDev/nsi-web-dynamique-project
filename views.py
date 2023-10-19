@@ -40,13 +40,6 @@ def fm():
     con = sql.connect(database)
     cursor = con.cursor()
     requete = """
-SELECT 
-*
-FROM orders
-JOIN users
-  ON orders.idUser = users.id
-JOIN Shoes
-  ON orders.idShoes = Shoes.id;
     """
     cursor.execute(requete)
     con.commit()
@@ -163,9 +156,23 @@ def account():
         # Utilise JOIN pour faire la jointure entre les tables
         con = sql.connect(database)
         cursor = con.cursor()
-        requete = """SELECT () FROM orders LEFT JOIN users ON orders.idUser = users.id"""
-        
-
+        requete = """
+        SELECT 
+            orders.idOrder,
+            orders.status,
+            Shoes.nom, 
+            Shoes.taille, 
+            Shoes.prix, 
+            Shoes.image
+        FROM orders
+        INNER JOIN shoes 
+        ON orders.idShoes = Shoes.id
+        INNER JOIN users
+        ON orders.idUser = users.id 
+        WHERE users.email=?; """
+        cursor.execute(requete, [session.get('user')[4]])
+        con.commit()
+        orders = cursor.fetchall()
         return render_template('./views/account.html', user=session.get('user'), 
                                logged_in=session.get('logged_in'),
                                orders=orders)

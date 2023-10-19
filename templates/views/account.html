@@ -1,48 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="/static/styles/account.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="/static/styles/account.css" />
     <title>Votre Compte</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Bonjour, <span> {{user[1]}} </span>!</h1>
-        <p>Bienvenue dans votre compte.</p>
-        <form action="/logout" method="post" class="form-logout">
-            <input class="logout" type="submit" value="Se déconnecter">
-        </form>
+      <h1>Bonjour, <span> {{user[1]}} </span>!</h1>
+      <p>Bienvenue dans votre compte.</p>
+      <form action="/logout" method="post" class="form-logout">
+        <input class="logout" type="submit" value="Se déconnecter" />
+      </form>
     </header>
     <h2 class="title-user-information">Vos information:</h2>
     <table class="user-information">
-        <tr>
-            <td>Nom</td>
-            <td>{{user[0]}}</td>
-        </tr>
-        <tr>
-            <td>Prénom</td>
-            <td>{{user[1]}}</td>
-        </tr>
-        <tr>
-            <td>Genre</td>
-            <td>
-                {% if user[2] == "m"%}
-                Homme
-                {% else %}
-                Femme
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>Pointure</td>
-            <td>{{user[3]}}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{user[4]}}</td>
-        </tr>
+      <tr>
+        <td>Nom</td>
+        <td>{{user[0]}}</td>
+      </tr>
+      <tr>
+        <td>Prénom</td>
+        <td>{{user[1]}}</td>
+      </tr>
+      <tr>
+        <td>Genre</td>
+        <td>{% if user[2] == "m"%} Homme {% else %} Femme {% endif %}</td>
+      </tr>
+      <tr>
+        <td>Pointure</td>
+        <td>{{user[3]}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{user[4]}}</td>
+      </tr>
     </table>
     <h2 class="title-user-information">Vos commandes:</h2>
-</body>
+    <table class="orders">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Image</th>
+          <th>Nom</th>
+          <th>Pointure</th>
+          <th>Prix</th>
+          <th>Statut de la commande</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td>{{order[0]}}</td>
+          <td><img src="{{order[5]}}" alt="Image Chaussure" width="50" /></td>
+          <td>{{order[2]}}</td>
+          <td>{{order[3]}}</td>
+          <td>{{order[4]}}</td>
+          <td>
+            {% if order[1] == 0 %} 
+                En cours 
+            {% elif order[1] == 1 %} 
+                Envoyé 
+            {% elif order[1] == 1 %} 
+                Annulé/Problème 
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
 </html>

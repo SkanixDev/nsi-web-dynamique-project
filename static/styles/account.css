@@ -74,3 +74,15 @@ th, td {
     text-align: left;
     padding: 8px;
 }
+
+/* Début design table orders */
+.orders{
+    max-width: 80%;
+    margin-inline: auto;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px  var(--shadow);
+}
+.orders tr{
+    box-shadow: 0 0 4px #ccc;
+}
