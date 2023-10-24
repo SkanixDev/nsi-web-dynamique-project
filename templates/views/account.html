@@ -70,5 +70,16 @@
         {% endfor %}
       </tbody>
     </table>
+    {% if admin %}
+    <section class="admin-part">
+      <h2 class="title-user-information">Partie Administrateur</h2>
+      <ul>
+        <li><a href="/add_shoe">Ajouter des Chaussures</a></li>
+        <li><a href="#">Gérer les chaussures</a></li>
+        <li><a href="#">Gérer les utilisateurs</a></li>
+        <li><a href="#">Gérer les commandes</a></li>
+      </ul>
+    </section>
+    {% endif %}
   </body>
 </html>

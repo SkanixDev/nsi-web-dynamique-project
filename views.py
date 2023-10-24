@@ -148,12 +148,6 @@ def account():
     if session.get('logged_in') is None:
         return redirect('/?info=not_logged_in')
     else:
-        # Tu dois:
-        # 1. Récuperer l'id de l'utilisateur dans `user`
-        # 2. Récuperer les commandes de l'utilisateur
-        # 3. Faire une joiture entre les commandes et les chaussures pour recuperer les informations des chaussures
-
-        # Utilise JOIN pour faire la jointure entre les tables
         con = sql.connect(database)
         cursor = con.cursor()
         requete = """
@@ -173,15 +167,20 @@ def account():
         cursor.execute(requete, [session.get('user')[4]])
         con.commit()
         orders = cursor.fetchall()
+
+        knowAdmin = cursor.execute("SELECT admin FROM users WHERE email=?;", [session.get('user')[4]]).fetchone()
+        
+
         return render_template('./views/account.html', user=session.get('user'), 
                                logged_in=session.get('logged_in'),
-                               orders=orders)
+                               orders=orders,
+                               admin=bool(knowAdmin[0]))
 
 # Page: add_shoes
 # Description: Page d'ajout de chaussures
-@app.route('/add_shoes', methods=['GET','POST'])
+@app.route('/add_shoe', methods=['GET','POST'])
 def add_shoes():
-    return render_template('./views/add_shoes.html')
+    return render_template('./views/add_shoe.html')
 
 # Page: logout
 # Description: Page de déconnexion

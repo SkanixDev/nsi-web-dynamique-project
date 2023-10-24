@@ -86,3 +86,8 @@ th, td {
 .orders tr{
     box-shadow: 0 0 4px #ccc;
 }
+
+/* Début design admin part */
+.admin-part li{
+    padding-block: 3px
+}
