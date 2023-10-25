@@ -57,6 +57,11 @@ header p {
 .form-logout input:hover{
     color: var(--blue);
 }
+
+a.back-shop{
+    display: block;
+    padding-top: 10px;
+}
 /* Fin design header*/
 
 /* Début design table user-information*/

@@ -62,6 +62,11 @@ const allMessages = [
     type: "info",
     message: "Vous êtes déconnecté !",
   },
+  {
+    name: "add_shoe_success",
+    type: "success",
+    message: "La chaussure a bien été ajoutée !",
+  },
 ];
 
 // create popups if there are errors, warnings, infos or success messages

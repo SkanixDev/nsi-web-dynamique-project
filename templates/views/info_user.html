@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/info_user.css" />
+    <title>Page d'information de compte</title>
+</head>
+<body>
+<script src="/script/js/erreur.js" type="text/javascript"></script>
+<h2>Tableau de {{user[2]}} {{user[1]}}</h2>
+<form action="/info_users/{{user[0]}}" method="post">
+<table>
+        <thead>
+          <tr>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Status Admin</th>
+              <th>Email</th>
+          </tr>
+          
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" name="name" id="name" value="{{user[1]}}"></td>
+            <td><input type="text" name="lastname" id="lastname" value="{{user[2]}}"></td>
+            <td>
+                <select name="status" id="status" >
+                    {% if user[4] == 0 %} 
+                        <option value="0" selected>Client</option>
+                        <option value="1">Admin</option>
+                    {% elif user[4] == 1 %} 
+                        <option value="0">Client</option>
+                        <option value="1" selected>Admin</option>
+                    {% endif %}
+                </select>
+            </td>
+            <td><input type="email" name="email" id="namemaile" value="{{user[6]}}"></td>
+          </tr>
+        </tbody>
+      </table>
+      <input class="submit" type="submit" value="Mettre à jour" />
+    </form>
+      <ul>
+        <a href="/info_users"> Retour Users </a>
+       </ul>
+</body>
+</html>

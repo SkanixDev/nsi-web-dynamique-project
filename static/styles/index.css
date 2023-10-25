@@ -65,6 +65,7 @@ main {
 }
 
 .card {
+  position: relative;
   width: 200px;
   margin-inline: 10px;
   margin-top: 10px;
@@ -89,6 +90,25 @@ main {
 
 .card .name_shoes {
   font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.card .stock_shoes{
+  font-size: 12px;
+  color: var(--blue2);
+  margin: 0;
+}
+.card .see_infos{
+  font-size: 12px;
+  font-weight: bold;
+  background-color: var(--blue);
+  padding-inline: 12px;
+  padding-block: 10px;
+  position: absolute;
+  right: 15px;
+  bottom: 30px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 footer {

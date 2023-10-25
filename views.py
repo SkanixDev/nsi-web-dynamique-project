@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, make_response
 import sqlite3 as sql
 from flask_bcrypt import Bcrypt
 from flask_session import Session
@@ -211,6 +211,7 @@ def add_shoes():
             result["url"], 
             result["stock"],)) 
             con.commit()
+            return redirect('/add_shoe?info=add_shoe_success')
         else:
             return redirect('/add_shoe?error=add_shoe_incomplete')
     else:
@@ -218,17 +219,31 @@ def add_shoes():
    
 # Page: Gérer les utilisateurs
 # Description: Page pour modifer les infos des utilisateurs
-@app.route('/info_users')
+@app.route('/info_users', method=['GET','POST'])
 def info_users():
+    result = request.form
+    if request.method == 'GET':
+        con = sql.connect(database)
+        cursor = con.cursor()
+        requete_all_users = "SELECT * FROM users"
+        cursor.execute(requete_all_users)
+        con.commit()
+        return render_template('./views/info_users.html', users=cursor.fetchall())
+    elif request.method == 'POST':
+        print("execute")
+
+# Page: Gérer un utilisateur
+# Description: Page pour modifer les infos d'un utilisateur
+@app.route('/info_user/<id>')
+def info_users_id(id):
 
     con = sql.connect(database)
     cursor = con.cursor()
-    requete_all_users = "SELECT * FROM users"
-    cursor.execute(requete_all_users)
+    requete = "SELECT * FROM users WHERE id=?"""
+    cursor.execute(requete, (id,))
     con.commit()
 
-    return render_template('./views/info_users.html', users=cursor.fetchall())
-
+    return render_template('./views/info_user.html', user=cursor.fetchone())
 
 # Page: logout
 # Description: Page de déconnexion
@@ -236,6 +251,15 @@ def info_users():
 def logout():
     session.clear()
     return redirect('/?info=logout_success')
+
+# Page: Script - Popups
+# Description: Fichier js pour la gestion des popups
+@app.route('/script/js/erreur.js')
+def script():
+    response = make_response(open("static/js/erreur.js", mode="r", encoding="utf-8"), 200)
+    response.mimetype = "application/javascript"
+    return response
+
 
 # Lancement du site
 app.run(debug=True)
