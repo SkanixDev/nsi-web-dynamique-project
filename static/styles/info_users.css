@@ -1,0 +1,43 @@
+@font-face {
+    font-family: Archivo;
+    src: url('/static/fonts/Archivo.ttf');
+  }
+  
+  :root {
+    --blue: #9eb7e5;
+    --white: #ffffff;
+    --gold: #cdc392;
+    --white-gold: #E8E5DA;
+    --blue2: #6074a1;
+    --font: #040507;
+    --shadow: rgba(125, 124, 124, 0.25);
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Archivo;
+  }
+  
+  h1 {
+    color: var(--blue);
+    margin: 0;
+    text-align: center;
+    padding-top: 15px;
+  }
+
+  table,
+td {
+  border: 1px solid #333;
+  text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+thead,
+tfoot {
+  text-align: center;
+  color: var(--blue2);
+}

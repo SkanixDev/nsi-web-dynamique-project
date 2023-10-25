@@ -23,7 +23,6 @@ def add_connect_cookies(user):
 # Description: Page d'accueil/principale du site web
 @app.route('/')
 def index():
-
     con = sql.connect(database)
     cursor = con.cursor()
     requete_all_shoes = "SELECT * FROM Shoes"
@@ -40,6 +39,7 @@ def fm():
     con = sql.connect(database)
     cursor = con.cursor()
     requete = """
+    SELECT * FROM Shoes
     """
     cursor.execute(requete)
     con.commit()
@@ -75,16 +75,13 @@ def login():
                     return redirect('/?info=login_success')
                 else:
                     print("[LOG] - Mot de passe incorrect")
-                    message = "Mot de passe incorrect"
-                    return render_template('./views/login.html', message=message)
+                    return redirect("/login?error=wrong_password")
             else:
                 print("[LOG] - Utilisateur introuvable")
-                message = "Utilisateur introuvable"
-                return render_template('./views/login.html', message=message)
+                return redirect("/login?error=user_not_found")
         else:
             print("[LOG] - Erreur de connexion")
-            message = "Erreur de connexion"
-            return render_template('./views/login.html', message=message)
+            return redirect("/login?error=login_error")
     else:
         return render_template('./views/login.html')
 
@@ -93,8 +90,6 @@ def login():
 @app.route('/register', methods=['GET','POST'])
 def register():
     result = request.form
-    message = ""
-    print(request.method)
     if request.method == 'POST':
         if (result["name"] != "" or result["lastname"] != "" 
         or result["gender"] != "" 
@@ -104,7 +99,17 @@ def register():
         or result["confirm_password"] != ""
         or result["confirm_password"] == result["password"]):
             print("[LOG] - Création d'un utilisateur")
-            ## A FAIRE : VERIFIER que l'user n'est pas dans la bdd
+            ## VERIFIER que le user n'est pas dans la base de donnée
+            con_user_exist = sql.connect(database)
+            cursor_user_exist = con_user_exist.cursor()
+            requete_user_exist = """SELECT * FROM users WHERE email=?;"""
+            cursor_user_exist.execute(requete_user_exist, (result["email"],))
+            con_user_exist.commit()
+            user_exist = cursor_user_exist.fetchall()
+            if user_exist:
+                print("[LOG] - L'utilisateur existe déjà")
+                return redirect('/register?info=user_exist')
+
             gender = "m"
             if result['gender'] == "gender_f":
                 gender = "f"
@@ -125,8 +130,7 @@ def register():
             add_connect_cookies(user_for_cookie)
             return redirect('/?info=register_success')
         else:
-            message = "Une erreur c'est produite."
-            return render_template('./views/register.html')
+            return redirect('/?error=register_error')
     else:
         return render_template('./views/register.html')
 
@@ -179,7 +183,52 @@ def account():
 # Description: Page d'ajout de chaussures
 @app.route('/add_shoe', methods=['GET','POST'])
 def add_shoes():
-    return render_template('./views/add_shoe.html')
+    result = request.form
+    # verify if user is admin
+    con_user_admin = sql.connect(database)
+    cursor_user_admin = con_user_admin.cursor()
+    requete_user_admin = """SELECT admin FROM users WHERE email=?;"""
+    cursor_user_admin.execute(requete_user_admin, [session.get('user')[4]]) 
+    if session.get('logged_in') is None:
+        return redirect('/?info=not_logged_in')
+    elif bool(cursor_user_admin.fetchone()) == False:
+        return redirect('/?info=not_admin')
+    if request.method == 'POST':
+        if (result["name"] != ""
+        or result["size"] != "" 
+        or result["price"] != ""
+        or result["url"] != ""
+        or result["stock"] != ""):
+            print("[LOG] - Ajout d'une chaussure")
+
+            con = sql.connect(database)
+            cursor = con.cursor()
+            requete = """INSERT INTO shoes (nom, taille, prix, image, stock) VALUES (?,?,?,?,?);"""
+            
+            cursor.execute(requete, (result["name"], 
+            result["size"], 
+            result["price"], 
+            result["url"], 
+            result["stock"],)) 
+            con.commit()
+        else:
+            return redirect('/add_shoe?error=add_shoe_incomplete')
+    else:
+        return render_template('./views/add_shoe.html')
+   
+# Page: Gérer les utilisateurs
+# Description: Page pour modifer les infos des utilisateurs
+@app.route('/info_users')
+def info_users():
+
+    con = sql.connect(database)
+    cursor = con.cursor()
+    requete_all_users = "SELECT * FROM users"
+    cursor.execute(requete_all_users)
+    con.commit()
+
+    return render_template('./views/info_users.html', users=cursor.fetchall())
+
 
 # Page: logout
 # Description: Page de déconnexion
@@ -187,8 +236,6 @@ def add_shoes():
 def logout():
     session.clear()
     return redirect('/?info=logout_success')
-
-
 
 # Lancement du site
 app.run(debug=True)
