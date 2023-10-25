@@ -169,7 +169,6 @@ def account():
         orders = cursor.fetchall()
 
         knowAdmin = cursor.execute("SELECT admin FROM users WHERE email=?;", [session.get('user')[4]]).fetchone()
-        
 
         return render_template('./views/account.html', user=session.get('user'), 
                                logged_in=session.get('logged_in'),

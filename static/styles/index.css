@@ -23,6 +23,10 @@ header h1 {
   color: var(--font);
   margin: 0;
 }
+.brand-name a{
+  text-decoration: none;
+  color: var(--font)
+}
 
 header {
   padding-top: 20px;
@@ -70,6 +74,12 @@ main {
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.card:hover{
+  transform: scale(1.05);
 }
 
 .card .price_card {

@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="/static/styles/index.css">
     <script src="/static/js/erreur.js" type="text/javascript"></script>
     <title>iStock</title>
+    
+    <script>
+        function goToShoe(target) {
+            window.location.href = "/product/"+target.id
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -14,7 +20,7 @@
             width="40"
             height="40">
         </div>
-        <h1>iStock</h1>
+        <h1 class="brand-name"><a href="/">iStock</a></h1>
         {% if logged_in %}
         <a class="user_account" href="/account">
             <img src="/static/img/user.svg" width="24" height="24">
@@ -29,11 +35,11 @@
         {% endif %}
 
     </header>
-    <div class="popup" onclick="compte()">pop
+    <div class="popup" onclick="compte()">pop a faire
       </div>
     <main>
         {%for shoe in shoes%} 
-        <div class="card">
+        <div class="card" onclick="goToShoe(this)" id="{{shoe[0]}}">
             <img src="{{shoe[4]}}" style="width:190px;">
             <p class="name_shoes">{{shoe[1]}}</p>
             <p class="price_card">{{shoe[3]}}€<p>
@@ -43,4 +49,5 @@
     <footer>
         <p>Remerciements à Baptiste Champion (il est beau), Nicholas Saintvil (il est beau) et François-Marie Lescure (il est  beau).</p>
     </footer>
+
 </body>
