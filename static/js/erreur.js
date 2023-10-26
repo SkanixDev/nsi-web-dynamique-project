@@ -67,6 +67,16 @@ const allMessages = [
     type: "success",
     message: "La chaussure a bien été ajoutée !",
   },
+  {
+    name: "info_user_success",
+    type: "success",
+    message: "Les informations ont bien été modifiées !",
+  },
+  {
+    name: "info_user_incomplete",
+    type: "error",
+    message: "Veuillez remplir tous les champs !",
+  },
 ];
 
 // create popups if there are errors, warnings, infos or success messages

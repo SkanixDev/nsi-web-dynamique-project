@@ -43,7 +43,8 @@ def fm():
     """
     cursor.execute(requete)
     con.commit()
-    print(cursor.fetchall())
+    
+    con.close()
     return render_template('./views/fm.html')
 
 # Page: Login
@@ -136,14 +137,37 @@ def register():
 
 # Page: product
 # Description: Page de produit, page dynamique
-@app.route('/product/<id>')
+@app.route('/product/<id>', methods=['GET','POST'])
 def product(id):
-    con = sql.connect(database)
-    cursor = con.cursor()
-    requete = """SELECT * FROM Shoes WHERE id=?;"""
-    cursor.execute(requete, (id,))
-    con.commit()
-    return render_template('./views/product.html', shoes=cursor.fetchall())
+    
+    if request.method == 'POST':
+        print("[LOG] - Ajout d'une commande")
+
+        #get user id and add order
+        con_user = sql.connect(database)
+        cursor_user = con_user.cursor()
+        requete_user = """SELECT id FROM users WHERE email=?;"""
+        cursor_user.execute(requete_user, [session.get('user')[4]])
+        con_user.commit()
+        user_id = cursor_user.fetchone()
+        print(user_id)
+        con_user.close()
+
+        con_order = sql.connect(database)
+        cursor_order = con_order.cursor()
+        requete_order = """INSERT INTO orders (idUser, idShoes, status) VALUES (?,?,?);"""
+        cursor_order.execute(requete_order, (user_id[0], id, 0))
+        con_order.commit()
+        con_order.close()
+
+        return redirect('/?info=order_success')
+    else:
+        con = sql.connect(database)
+        cursor = con.cursor()
+        requete = """SELECT * FROM Shoes WHERE id=?;"""
+        cursor.execute(requete, (id,))
+        con.commit()
+        return render_template('./views/product.html', shoe=cursor.fetchone(), logged_in=session.get('logged_in'))
 
 # Page: account
 # Description: Page de compte utilisateur
@@ -219,7 +243,7 @@ def add_shoes():
    
 # Page: Gérer les utilisateurs
 # Description: Page pour modifer les infos des utilisateurs
-@app.route('/info_users', method=['GET','POST'])
+@app.route('/info_users', methods=['GET','POST'])
 def info_users():
     result = request.form
     if request.method == 'GET':
@@ -234,7 +258,7 @@ def info_users():
 
 # Page: Gérer un utilisateur
 # Description: Page pour modifer les infos d'un utilisateur
-@app.route('/info_user/<id>')
+@app.route('/info_user/<id>', methods=['GET','POST'])
 def info_users_id(id):
 
     con = sql.connect(database)
@@ -242,8 +266,34 @@ def info_users_id(id):
     requete = "SELECT * FROM users WHERE id=?"""
     cursor.execute(requete, (id,))
     con.commit()
+    user = cursor.fetchone()
+    result = request.form
+    if request.method == 'POST':
+        if (result["name"] != ""
+        or result["lastname"] != "" 
+        or result["status"] != ""
+        or result["email"] != ""):
+            print("[LOG] - Mise a jour de l'utilisateur")
 
-    return render_template('./views/info_user.html', user=cursor.fetchone())
+            con = sql.connect(database)
+            cursor = con.cursor()
+            requete = """UPDATE users SET name=?, lastname=?, admin=?, email=? WHERE id=?;"""
+            
+            cursor.execute(requete, (result["name"], 
+            result["lastname"], 
+            result["status"], 
+            result["email"],
+            user[0]))
+            con.commit()
+            return redirect('/info_users?info=info_user_success')
+        else:
+            return redirect('/info_users?error=info_user_incomplete')
+    else:
+        return render_template('./views/info_user.html', user=user)
+
+
+
+
 
 # Page: logout
 # Description: Page de déconnexion
