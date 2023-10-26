@@ -77,6 +77,11 @@ const allMessages = [
     type: "error",
     message: "Veuillez remplir tous les champs !",
   },
+  {
+    name: "order_success",
+    type: "success",
+    message: "La commande a bien été passée !",
+  },
 ];
 
 // create popups if there are errors, warnings, infos or success messages

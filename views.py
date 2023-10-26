@@ -19,6 +19,21 @@ def add_connect_cookies(user):
     session['logged_in'] = True
     session['user'] = user
 
+def user_admin():
+    con = sql.connect(database)
+    cursor = con.cursor()
+    requete = """SELECT admin FROM users WHERE email=?;"""
+    cursor.execute(requete, [session.get('user')[4]]) 
+    user_admin = cursor.fetchone()
+    con.close()
+    return bool(user_admin[0])
+
+def user_logged_in():
+    if session.get('logged_in') is None:
+        return False
+    else:
+        return True
+
 # Page: Main
 # Description: Page d'accueil/principale du site web
 @app.route('/')
@@ -53,7 +68,6 @@ def fm():
 def login():
     result = request.form
     message = ""
-    # A FAIRE: Ajouter les cookies
     
     if session.get('logged_in') is not None:
         return redirect('/?info=already_logged_in')
@@ -91,6 +105,9 @@ def login():
 @app.route('/register', methods=['GET','POST'])
 def register():
     result = request.form
+    
+    if session.get('logged_in') is not None:
+        return redirect('/?info=already_logged_in')
     if request.method == 'POST':
         if (result["name"] != "" or result["lastname"] != "" 
         or result["gender"] != "" 
@@ -141,6 +158,8 @@ def register():
 def product(id):
     
     if request.method == 'POST':
+        if session.get('logged_in') is None:
+            return redirect('/login?info=not_logged_in')
         print("[LOG] - Ajout d'une commande")
 
         #get user id and add order
@@ -208,15 +227,11 @@ def account():
 @app.route('/add_shoe', methods=['GET','POST'])
 def add_shoes():
     result = request.form
-    # verify if user is admin
-    con_user_admin = sql.connect(database)
-    cursor_user_admin = con_user_admin.cursor()
-    requete_user_admin = """SELECT admin FROM users WHERE email=?;"""
-    cursor_user_admin.execute(requete_user_admin, [session.get('user')[4]]) 
-    if session.get('logged_in') is None:
+
+    if user_logged_in() == False:
         return redirect('/?info=not_logged_in')
-    elif bool(cursor_user_admin.fetchone()) == False:
-        return redirect('/?info=not_admin')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
     if request.method == 'POST':
         if (result["name"] != ""
         or result["size"] != "" 
@@ -246,6 +261,12 @@ def add_shoes():
 @app.route('/info_users', methods=['GET','POST'])
 def info_users():
     result = request.form
+
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
+    
     if request.method == 'GET':
         con = sql.connect(database)
         cursor = con.cursor()
@@ -260,6 +281,11 @@ def info_users():
 # Description: Page pour modifer les infos d'un utilisateur
 @app.route('/info_user/<id>', methods=['GET','POST'])
 def info_users_id(id):
+
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
 
     con = sql.connect(database)
     cursor = con.cursor()

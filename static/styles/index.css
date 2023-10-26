@@ -19,6 +19,8 @@ body {
   font-family: Archivo;
 }
 
+/* Début design header */
+
 header h1 {
   color: var(--font);
   margin: 0;
@@ -51,6 +53,28 @@ header {
   margin-inline: 50px;
   font-size: 18px;
 }
+.header-menu li a{
+  text-decoration: none;
+  color: var(--font);
+  position: relative;
+}
+.header-menu li a::after{
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: var(--blue2);
+  transition: width .3s ease;
+  -webkit-transition: width .3s ease;
+}
+.header-menu li a:hover:after{
+  width: 100%;
+  left: 0;
+  background: var(--blue2);
+}
 
 
 .user {
@@ -69,6 +93,8 @@ header {
   padding-inline: 5px;
   font-weight: bold;
 }
+
+/* Fin desgin header */
 
 main {
   display: flex;
