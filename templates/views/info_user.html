@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="\static\img\favicon.svg">
     <link rel="stylesheet" href="/static/styles/info_user.css" />
     <title>Page d'information de compte</title>
 </head>
@@ -17,7 +18,6 @@
               <th>Prénom</th>
               <th>Status Admin</th>
               <th>Email</th>
-              <th>Commandes</th>
           </tr>
           
         </thead>
@@ -37,12 +37,56 @@
                 </select>
             </td>
             <td><input type="email" name="email" id="namemaile" value="{{user[6]}}"></td>
-            <td>j</td>
           </tr>
         </tbody>
       </table>
       <input class="submit" type="submit" value="Mettre à jour" />
     </form>
+
+    <table>
+      <thead>
+        <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Nom</th>
+            <th>Taille</th>
+            <th>Prix</th>
+            <th>Image</th>
+            <th>Supprimer</th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td>{{order[0]}}</td>
+          <td>{{order[1]}}</td>
+          <td>{{order[2]}}</td>
+          <td>{{order[3]}}</td>
+          <td>{{order[4]}}</td>
+          <td><img src="{{order[5]}}" alt="Chaussure" width="50px"/></td>
+          <td><select name="delete" id="delete" >
+              {% if order[1] == 0 %} 
+                  <option value="0" selected>En Cours</option>
+                  <option value="1">Envoyé</option>
+                  <option value="2">Annulé/Problème</option>
+                  {% elif order[1] == 1 %} 
+                  <option value="1" selected>Envoyé</option>
+                  <option value="0" >En Cours</option>
+                  <option value="2">Annulé/Problème</option>
+                  {% elif order[2] == 2 %} 
+                  <option value="2" selected>Annulé/Problème</option>
+                  <option value="1" >Envoyé</option>
+                  <option value="0" >En Cours</option>
+              {% endif %}
+          </select>
+        </td>
+      
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <input class="submit" type="submit" value="Mettre à jour" />
       
         <a href="/info_users">Retour aux utilisateurs</a>
        

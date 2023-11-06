@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <link rel="stylesheet" href="/static/styles/info_users.css" />
+    <link rel="icon" type="image/x-icon" href="\static\img\favicon.svg">
+	<title>Gérer la chaussure</title>
+</head>
+<body>
+	<form action="/manage_shoe/{{shoe[0]}}" method="post">
+		<table>
+				<thead>
+				  <tr>
+					  <th>Nom</th>
+					  <th>Taille</th>
+					  <th>Prix</th>
+					  <th>Stock</th>
+					  <th>Image</th>
+				  </tr>
+				  
+				</thead>
+				<tbody>
+				  <tr>
+					<td><input type="text" name="nom" id="nom" value="{{shoe[1]}}"></td>
+					<td><input type="number" name="taille" id="taille" value="{{shoe[2]}}"></td>
+					<td><input type="number" name="prix" id="prix" value="{{shoe[3]}}" step="0.1"></td>
+					<td><input type="number" name="stock" id="stock" value="{{shoe[5]}}"></td>
+					<td><input type="url" name="image" id="image" value="{{shoe[4]}}"></td>
+				  </tr>
+				</tbody>
+			  </table>
+			  <input class="submit" type="submit" value="Mettre à jour" />
+			</form>        
+</body>
+</html>

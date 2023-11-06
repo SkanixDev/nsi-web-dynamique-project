@@ -258,7 +258,7 @@ def add_shoes():
    
 # Page: Gérer les utilisateurs
 # Description: Page pour modifer les infos des utilisateurs
-@app.route('/info_users', methods=['GET','POST'])
+@app.route('/info_users', methods=['GET'])
 def info_users():
     result = request.form
 
@@ -274,11 +274,72 @@ def info_users():
         cursor.execute(requete_all_users)
         con.commit()
         return render_template('./views/info_users.html', users=cursor.fetchall())
-    elif request.method == 'POST':
-        print("execute")
+    
 
 # Page: Gérer un utilisateur
 # Description: Page pour modifer les infos d'un utilisateur
+@app.route('/info_user/<id>', methods=['GET','POST'])
+def info_user_id(id):
+
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
+
+    # Récupérer les informations de l'utilisateur
+    con = sql.connect(database)
+    cursor = con.cursor()
+    requete = "SELECT * FROM users WHERE id=?"""
+    cursor.execute(requete, (id,))
+    con.commit()
+    user = cursor.fetchone()
+    result = request.form
+
+    # Récupérer toutes les commandes de l'utilisateur
+    con = sql.connect(database)
+    cursor = con.cursor()
+    requete = """
+    SELECT 
+            orders.idOrder,
+            orders.status,
+            Shoes.nom, 
+            Shoes.taille, 
+            Shoes.prix, 
+            Shoes.image
+        FROM orders
+        INNER JOIN shoes 
+        ON orders.idShoes = Shoes.id
+        INNER JOIN users
+        ON orders.idUser = users.id 
+        WHERE users.id=?; """
+    cursor.execute(requete, [id])
+    con.commit()
+    orders = cursor.fetchall()
+
+
+    if request.method == 'POST':
+        if (result["name"] != ""
+        or result["lastname"] != "" 
+        or result["status"] != ""
+        or result["email"] != ""):
+            print("[LOG] - Mise a jour de l'utilisateur")
+
+            con = sql.connect(database)
+            cursor = con.cursor()
+            requete = """UPDATE users SET name=?, lastname=?, admin=?, email=? WHERE id=?;"""
+            
+            cursor.execute(requete, (result["name"], 
+            result["lastname"], 
+            result["status"], 
+            result["email"],
+            user[0]))
+            con.commit()
+            return redirect('/info_users?info=info_user_success')
+        else:
+            return redirect('/info_users?error=info_user_incomplete')
+    else:
+        return render_template('./views/info_user.html', user=user, orders = orders)
+
 @app.route('/info_user/<id>', methods=['GET','POST'])
 def info_users_id(id):
 
@@ -318,7 +379,68 @@ def info_users_id(id):
         return render_template('./views/info_user.html', user=user)
 
 
+# Page: manage_shoes
+# Description: Page pour gérer l'ensemble des chaussures
+@app.route('/manage_shoes', methods=['GET'])
+def manage_shoes():
+    result = request.form
 
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
+    
+    if request.method == 'GET':
+        con = sql.connect(database)
+        cursor = con.cursor()
+        requete_all_users = "SELECT * FROM Shoes"
+        cursor.execute(requete_all_users)
+        con.commit()
+        return render_template('./views/manage_shoes.html', shoes=cursor.fetchall())
+    
+   
+# Page: manage_shoe
+# Description: Page pour gerer une paire de chaussure
+@app.route('/manage_shoe/<id>', methods=['GET','POST'])
+def manage_shoe(id):
+    result = request.form
+
+    
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
+    con = sql.connect(database)
+    cursor = con.cursor()
+    requete = "SELECT * FROM Shoes WHERE id=?"""
+    cursor.execute(requete, (id,))
+    con.commit()
+    shoe = cursor.fetchone()
+
+    if request.method == "POST":
+        if (result["nom"] != ""
+        or result["taille"] != "" 
+        or result["prix"] != ""
+        or result["image"] != ""
+        or result["stock"] != ""):
+            print("[LOG] - Mise a jour d'une chaussure")
+
+            con = sql.connect(database)
+            cursor = con.cursor()
+            requete = """UPDATE Shoes SET nom=?, taille=?, prix=?, image=?, stock=? WHERE id=?;"""
+            
+            cursor.execute(requete, (result["nom"], 
+            result["taille"], 
+            result["prix"], 
+            result["image"], 
+            result["stock"],
+            id))
+            con.commit()
+            return redirect('/manage_shoes?info=info_user_success')
+        else:
+            return redirect('/manage_shoes?error=info_user_incomplete')
+    else:
+        return render_template('./views/manage_shoe.html', shoe=shoe)
 
 
 # Page: logout

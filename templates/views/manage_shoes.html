@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="\static\img\favicon.svg">
+    <link rel="stylesheet" href="/static/styles/info_users.css" />
+    <title>Gérer les chaussures</title>
+</head>
+<body>
+  <script src="/script/js/erreur.js" type="text/javascript"></script>
+  <h1>Gérer les chaussures</h1>
+  <table>
+      <thead>
+        <tr>
+            <th>Id</th>
+            <th></th>
+            <th>Nom</th>
+            <th>Taille</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Modifier les chaussures</th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        {% for shoe in shoes %}
+        <tr>
+            <td>{{shoe[0]}}</td>
+            <td><img src="{{shoe[4]}}" alt="Chaussure" width="50px"/></td>
+            <td>{{shoe[1]}}</td>
+            <td>{{shoe[2]}}</td>
+            <td>{{shoe[3]}}</td>
+            <td>{{shoe[5]}}</td>
+            <td>
+              <ul>
+               <a href="/manage_shoe/{{shoe[0]}}" class="access-user">Modifier la chaussure</a>
+              </ul>
+           </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <ul>
+      <a href="/account">Retour à votre compte</a>
+     </ul>
+      
+</body>
+</html>
