@@ -46,21 +46,12 @@ def index():
 
     return render_template('./views/index.html', shoes=cursor.fetchall(), logged_in=session.get('logged_in'), user=session.get('user'))
 
-# Page: FM
-# Description: Page de test pour FM (a supprimer)
-@app.route('/fm')
-def fm():
+# Page: Contacter
+# Description: Page pour nous rejoindre
+@app.route('/contact')
+def contacter():
 
-    con = sql.connect(database)
-    cursor = con.cursor()
-    requete = """
-    SELECT * FROM Shoes
-    """
-    cursor.execute(requete)
-    con.commit()
-    
-    con.close()
-    return render_template('./views/fm.html')
+    return render_template('./views/contact.html', user=session.get('user'))
 
 # Page: Login
 # Description: Page de connexion d'utilisateur
@@ -105,18 +96,20 @@ def login():
 @app.route('/register', methods=['GET','POST'])
 def register():
     result = request.form
-    
     if session.get('logged_in') is not None:
         return redirect('/?info=already_logged_in')
     if request.method == 'POST':
+        print(result["confirm_password"]== result["password"])
         if (result["name"] != "" or result["lastname"] != "" 
         or result["gender"] != "" 
         or result["email"] != ""
         or result["size"] != ""
         or result["password"] != ""
-        or result["confirm_password"] != ""
-        or result["confirm_password"] == result["password"]):
+        or result["confirm_password"] != ""):
             print("[LOG] - Création d'un utilisateur")
+            if result["confirm_password"] != result["password"]:
+                print("[LOG] - Les mots de passe ne correspondent pas")
+                return redirect('/register?error=password_not_match')
             ## VERIFIER que le user n'est pas dans la base de donnée
             con_user_exist = sql.connect(database)
             cursor_user_exist = con_user_exist.cursor()
@@ -378,6 +371,28 @@ def info_users_id(id):
     else:
         return render_template('./views/info_user.html', user=user)
 
+# Page: /info_user/<id>/orders
+# Description: Page pour mettre à jour les commandes d'un utilisateur (post)
+@app.route('/info_user/<id>/orders', methods=['POST'])
+def info_user_orders(id):
+    result = list(request.form.listvalues())
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
+
+    if request.method == 'POST': 
+        print("[LOG] - Mise a jour de la commande")
+        
+        con = sql.connect(database)
+        cursor = con.cursor()
+        for x in range(len(result[0])):
+            requete = """UPDATE orders SET status=? WHERE idOrder=?;"""
+            cursor.execute(requete, (result[1][x], result[0][x]))
+            con.commit()
+        con.close()
+        return redirect('/info_user/'+id+'?info=info_user_success')
+    
 
 # Page: manage_shoes
 # Description: Page pour gérer l'ensemble des chaussures

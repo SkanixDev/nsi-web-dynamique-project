@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/x-icon" href="\static\img\favicon.svg">
+        <link rel="stylesheet" href="/static/styles/contact.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nous Contacter - IStock Chaussures</title>
+</head>
+<body>
+    <script src="/script/js/erreur.js" type="text/javascript"></script>
+    <header>
+        <h1 class="brand-name"><a href="/">IStock</a></h1>
+        <ul class="header-menu">
+            <li><a href="/">Produits</a></li>
+            <li><a href="/contact">Nous contacter</a></li>
+        </ul>
+        {% if logged_in %}
+        <a class="user_account" href="/account">
+            <img src="/static/img/user.svg" width="24" height="24">
+        </a>
+        {% else %}
+        <div class="user">
+            <img src="/static/img/user.svg" width="16" height="16">
+            <a href="/login" class="button-link">
+            Connexion
+            </a> 
+        </div>
+        {% endif %}
+
+    </header>
+    <section>
+        <h1>Nous Contacter</h1>
+        <p>Bienvenue sur la page de contact d'IStock !</p>
+
+
+        <h2>Informations de Contact</h2>
+        <p>Vous pouvez nous contacter via notre service client.</p>
+        <ul>
+            <li>Téléphone : +33 01 23 34 56 67</li>
+            <li>E-mail : <a href="mailto:support@istock.com">support@istock.com</a></li>
+        </ul>
+    </section>
+</body>
+</html>

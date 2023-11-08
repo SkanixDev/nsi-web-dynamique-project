@@ -41,8 +41,9 @@
         </tbody>
       </table>
       <input class="submit" type="submit" value="Mettre à jour" />
-    </form>
+    </form> 
 
+    <form action="/info_user/{{user[0]}}/orders" method="post">
     <table>
       <thead>
         <tr>
@@ -59,22 +60,23 @@
       <tbody>
         {% for order in orders %}
         <tr>
-          <td>{{order[0]}}</td>
+          <td><input type="number" style="width: 30px" name="idOrder" name="idOrder" value="{{order[0]}}" readonly="readonly"/></td>
           <td>{{order[1]}}</td>
           <td>{{order[2]}}</td>
           <td>{{order[3]}}</td>
-          <td>{{order[4]}}</td>
+          <td>{{order[4]}}</td> 
           <td><img src="{{order[5]}}" alt="Chaussure" width="50px"/></td>
-          <td><select name="delete" id="delete" >
+          <td>
+            <select name="status" id="status" >
               {% if order[1] == 0 %} 
                   <option value="0" selected>En Cours</option>
                   <option value="1">Envoyé</option>
                   <option value="2">Annulé/Problème</option>
-                  {% elif order[1] == 1 %} 
+              {% elif order[1] == 1 %} 
                   <option value="1" selected>Envoyé</option>
                   <option value="0" >En Cours</option>
                   <option value="2">Annulé/Problème</option>
-                  {% elif order[2] == 2 %} 
+              {% elif order[1] == 2 %} 
                   <option value="2" selected>Annulé/Problème</option>
                   <option value="1" >Envoyé</option>
                   <option value="0" >En Cours</option>
@@ -87,8 +89,8 @@
       </tbody>
     </table>
     <input class="submit" type="submit" value="Mettre à jour" />
-      
-        <a href="/info_users">Retour aux utilisateurs</a>
+    </form>  
+    <a href="/info_users">Retour aux utilisateurs</a>
        
 </body>
 </html>

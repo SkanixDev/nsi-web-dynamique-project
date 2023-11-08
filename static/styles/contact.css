@@ -1,0 +1,82 @@
+@font-face {
+    font-family: Archivo;
+    src: url('/static/fonts/Archivo.ttf');
+  }
+  
+  :root {
+    --blue: #9eb7e5;
+    --white: #ffffff;
+    --gold: #cdc392;
+    --white-gold: #E8E5DA;
+    --blue2: #6074a1;
+    --font: #040507;
+    --shadow: rgba(125, 124, 124, 0.25);
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Archivo;
+  }
+  
+/* Début design header */
+
+header h1 {
+    color: var(--font);
+    margin: 0;
+  }
+  .brand-name a{
+    text-decoration: none;
+    color: var(--font)
+  }
+  
+  header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: var(--white);
+    box-shadow: 0px 0px 20px var(--shadow);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-inline: 5rem;
+  } 
+  .header-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+  }
+  .header-menu li{
+    margin-inline: 50px;
+    font-size: 18px;
+  }
+  .header-menu li a{
+    text-decoration: none;
+    color: var(--font);
+    position: relative;
+  }
+  .header-menu li a::after{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: var(--blue2);
+    transition: width .3s ease;
+    -webkit-transition: width .3s ease;
+  }
+  .header-menu li a:hover:after{
+    width: 100%;
+    left: 0;
+    background: var(--blue2);
+  }
+
+section {
+    margin: 10;
+
+}

@@ -82,6 +82,11 @@ const allMessages = [
     type: "success",
     message: "La commande a bien été passée !",
   },
+  {
+    name: "password_not_match",
+    type: "error",
+    message: "Les mots de passe ne correspondent pas !"
+  }
 ];
 
 // create popups if there are errors, warnings, infos or success messages
