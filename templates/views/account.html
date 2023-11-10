@@ -9,14 +9,22 @@
   </head>
   <body>
     <script src="/script/js/erreur.js" type="text/javascript"></script>
+
     <header>
-      <h1>Bonjour, <span> {{user[1]}} </span>!</h1>
-      <p>Bienvenue dans votre compte.</p>
-      <form action="/logout" method="post" class="form-logout">
-        <input class="logout" type="submit" value="Se déconnecter" />
-      </form>
-      <a href="/" class="back-shop">Retourner sur le magasin</a>
+      <h1 class="brand-name"><a href="/">IStock</a></h1>
+      <ul class="header-menu">
+          <li><a href="/">Produits</a></li>
+          <li><a href="/contact">Nous contacter</a></li>
+          
+        </ul>
+        <form action="/logout" method="post" class="form-logout">
+          <input class="logout" type="submit" value="Se déconnecter" />
+        </form>
+     
     </header>
+
+      <h1>Bonjour, <span style="color: var(--blue2)"> {{user[1]}} </span>!</h1>
+      <p>Bienvenue dans votre compte.</p>
     <h2 class="title-user-information">Vos information:</h2>
     <table class="user-information">
       <tr>

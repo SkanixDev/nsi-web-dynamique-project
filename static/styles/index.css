@@ -1,8 +1,11 @@
+/*Ajout de la police d'écriture*/
 @font-face {
   font-family: Archivo;
   src: url('/static/fonts/Archivo.ttf');
 }
+/*Fin ajout de la police d'écriture*/
 
+/*Palette*/
 :root {
   --blue: #9eb7e5;
   --white: #ffffff;
@@ -12,6 +15,7 @@
   --font: #040507;
   --shadow: rgba(125, 124, 124, 0.25);
 }
+/*Fin palette*/
 
 body {
   margin: 0;
@@ -96,6 +100,7 @@ header {
 
 /* Fin desgin header */
 
+/* Style card chaussure */
 main {
   display: flex;
   flex-wrap: wrap;
@@ -148,6 +153,7 @@ main {
   text-align: center;
   border-radius: 10px;
 }
+/* Fin style card chaussure */
 
 footer {
   text-align: center;
@@ -155,11 +161,7 @@ footer {
   background-color: var(--white-gold);
 }
 
-.lineaire-simple {
-  background: linear-gradient(blue, pink);
-}
-
-/* */
+/* Centrer icône de connexion */
 .user_account {
   display: flex;
   flex-direction: column;

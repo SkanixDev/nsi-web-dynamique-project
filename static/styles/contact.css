@@ -75,7 +75,25 @@ header h1 {
     left: 0;
     background: var(--blue2);
   }
+  
+.user {
+  border: 2px solid var(--blue2);
+  background-color: var(--blue2);
+  padding-inline: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
 
+.button-link {
+  text-decoration: none;
+  color: var(--white);
+  padding-inline: 5px;
+  font-weight: bold;
+}
+
+/* Fin header */
 section {
     margin: 10;
 

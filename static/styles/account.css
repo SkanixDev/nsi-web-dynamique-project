@@ -14,6 +14,82 @@
   --shadow: rgba(125, 124, 124, 0.25);
 }
 
+/* Début design header */
+
+header h1 {
+    color: var(--font);
+    margin: 0;
+  }
+  .brand-name a{
+    text-decoration: none;
+    color: var(--font)
+  }
+  
+  header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: var(--white);
+    box-shadow: 0px 0px 20px var(--shadow);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-inline: 5rem;
+  }
+  .header-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+  }
+  .header-menu li{
+    margin-inline: 50px;
+    font-size: 18px;
+  }
+  .header-menu li a{
+    text-decoration: none;
+    color: var(--font);
+    position: relative;
+  }
+  .header-menu li a::after{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: var(--blue2);
+    transition: width .3s ease;
+    -webkit-transition: width .3s ease;
+  }
+  .header-menu li a:hover:after{
+    width: 100%;
+    left: 0;
+    background: var(--blue2);
+  }
+  
+  
+  .user {
+    border: 2px solid var(--blue2);
+    background-color: var(--blue2);
+    padding-inline: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  
+  .button-link {
+    text-decoration: none;
+    color: var(--white);
+    padding-inline: 5px;
+    font-weight: bold;
+  }
+  
+  /* Fin desgin header */
 
 body {
     margin: 0;
@@ -24,7 +100,6 @@ body {
 
 /* Début design header */
 header {
-    margin-block: 40px;
     padding-inline: 20px;
 }
 
@@ -41,14 +116,14 @@ header p {
     opacity: .7;
 }
 
-.form-logout{
-    position: absolute;
-    right: 40px;
-    top: 40px;
-}
 .form-logout input {
-    border: none;
+    border: 3px solid var(--blue);
     background-color: transparent;
+    border-radius: 10px;
+     display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin-inline: auto;
     color: var(--blue2);
     font-weight: bold;
     cursor: pointer;

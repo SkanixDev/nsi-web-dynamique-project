@@ -1,6 +1,7 @@
 const allPopups = [];
 let searchParams = new URLSearchParams(window.location.search);
 
+// Création d'un table pour répertorier toutes les erreurs
 const allMessages = [
   {
     name: "user_exist",
@@ -89,7 +90,7 @@ const allMessages = [
   }
 ];
 
-// create popups if there are errors, warnings, infos or success messages
+// si dans l'url un message (erreur, info,warning,...) alors chercher dans la table et appeller la fonction createPopups
 if (searchParams.has("error")) {
   const error = searchParams.get("error");
   const message = allMessages.find((msg) => msg.name === error);
@@ -108,7 +109,9 @@ if (searchParams.has("error")) {
   createPopups(message.type, message.message);
 }
 
+// Fonction pour créer une popup
 function createPopups(type, message, duration = 5000) {
+  //ajouter tous le css
   const div = document.createElement("div");
   div.style.position = "absolute";
   div.style.top = allPopups.length * 60 + 20 + "px";
@@ -122,6 +125,7 @@ function createPopups(type, message, duration = 5000) {
   div.style.textAlign = "center";
   div.style.fontWeight = "bold";
 
+  // permet de mettre la bonne couleur à l'erreur
   switch (type) {
     case "success":
       div.style.backgroundColor = "#28a745";
@@ -147,7 +151,7 @@ function createPopups(type, message, duration = 5000) {
   allPopups.push({ type, message, duration });
 
   setTimeout(() => {
-    // make transition fade and remove
+    // transition lors de la suppression d'une popup
     div.style.transition = "opacity 1s ease-in";
     div.style.opacity = "0";
     setTimeout(() => {

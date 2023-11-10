@@ -51,7 +51,7 @@ def index():
 @app.route('/contact')
 def contacter():
 
-    return render_template('./views/contact.html', user=session.get('user'))
+    return render_template('./views/contact.html', logged_in=session.get('logged_in'))
 
 # Page: Login
 # Description: Page de connexion d'utilisateur
@@ -60,6 +60,7 @@ def login():
     result = request.form
     message = ""
     
+    # vérification de l'état de connexion
     if session.get('logged_in') is not None:
         return redirect('/?info=already_logged_in')
     
@@ -72,7 +73,6 @@ def login():
             cursor.execute(requete, (result["email"],))
             con.commit()
             user = cursor.fetchall()
-            print(user)
             if user:
                 if bcrypt.check_password_hash(user[0][7], result["password"]):
                     user_for_cookie = (user[0][1], user[0][2], user[0][3], user[0][5], user[0][6])
@@ -96,10 +96,11 @@ def login():
 @app.route('/register', methods=['GET','POST'])
 def register():
     result = request.form
+    # vérification de l'état de connexion
     if session.get('logged_in') is not None:
         return redirect('/?info=already_logged_in')
     if request.method == 'POST':
-        print(result["confirm_password"]== result["password"])
+        # vérification du champ vide et du mot de passe étant pas la meme
         if (result["name"] != "" or result["lastname"] != "" 
         or result["gender"] != "" 
         or result["email"] != ""
@@ -110,13 +111,13 @@ def register():
             if result["confirm_password"] != result["password"]:
                 print("[LOG] - Les mots de passe ne correspondent pas")
                 return redirect('/register?error=password_not_match')
-            ## VERIFIER que le user n'est pas dans la base de donnée
             con_user_exist = sql.connect(database)
             cursor_user_exist = con_user_exist.cursor()
             requete_user_exist = """SELECT * FROM users WHERE email=?;"""
             cursor_user_exist.execute(requete_user_exist, (result["email"],))
             con_user_exist.commit()
             user_exist = cursor_user_exist.fetchall()
+            # vérification de l'existance du comtpe
             if user_exist:
                 print("[LOG] - L'utilisateur existe déjà")
                 return redirect('/register?info=user_exist')
@@ -162,7 +163,6 @@ def product(id):
         cursor_user.execute(requete_user, [session.get('user')[4]])
         con_user.commit()
         user_id = cursor_user.fetchone()
-        print(user_id)
         con_user.close()
 
         con_order = sql.connect(database)
@@ -188,6 +188,7 @@ def account():
     if session.get('logged_in') is None:
         return redirect('/?info=not_logged_in')
     else:
+        # Jointure entre les table de la base de données 
         con = sql.connect(database)
         cursor = con.cursor()
         requete = """
@@ -225,6 +226,7 @@ def add_shoes():
         return redirect('/?info=not_logged_in')
     if user_admin() == False:
         return redirect('/account?info=not_admin')
+    # vérification des champs vide
     if request.method == 'POST':
         if (result["name"] != ""
         or result["size"] != "" 
@@ -309,7 +311,7 @@ def info_user_id(id):
     con.commit()
     orders = cursor.fetchall()
 
-
+    # vérification des champs vide
     if request.method == 'POST':
         if (result["name"] != ""
         or result["lastname"] != "" 
@@ -348,6 +350,7 @@ def info_users_id(id):
     con.commit()
     user = cursor.fetchone()
     result = request.form
+    # vérification des champs vide
     if request.method == 'POST':
         if (result["name"] != ""
         or result["lastname"] != "" 
@@ -419,7 +422,6 @@ def manage_shoes():
 @app.route('/manage_shoe/<id>', methods=['GET','POST'])
 def manage_shoe(id):
     result = request.form
-
     
     if user_logged_in() == False:
         return redirect('/?info=not_logged_in')
@@ -431,7 +433,7 @@ def manage_shoe(id):
     cursor.execute(requete, (id,))
     con.commit()
     shoe = cursor.fetchone()
-
+    # vérification des champs vide
     if request.method == "POST":
         if (result["nom"] != ""
         or result["taille"] != "" 
@@ -457,7 +459,26 @@ def manage_shoe(id):
     else:
         return render_template('./views/manage_shoe.html', shoe=shoe)
 
+# Page: manage_shoe/delete
+# Description: Suppression d'un chaussure
+@app.route('/manage_shoe/<id>/delete', methods=['POST'])
+def manage_shoe_delete(id):
+    result = request.form
+    if user_logged_in() == False:
+        return redirect('/?info=not_logged_in')
+    if user_admin() == False:
+        return redirect('/account?info=not_admin')
+    
+    # if method post delete shoe
+    if request.method == 'POST':
+        print("[LOG] - Suppression d'une chaussure")
 
+        con = sql.connect(database)
+        cursor = con.cursor()
+        requete = """DELETE FROM Shoes WHERE id=?;"""
+        cursor.execute(requete, (id,))
+        con.commit()
+        return redirect('/manage_shoes?info=delete_shoe_success')
 # Page: logout
 # Description: Page de déconnexion
 @app.route('/logout', methods=['POST'])
@@ -476,10 +497,6 @@ def script():
 
 # Lancement du site
 app.run(debug=True)
-
-
-# SQLITE Documentation
-# https://www.tutorialspoint.com/sqlite/sqlite_python.htm
 
 
 
